@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import AppHeader from '../components/AppHeader.jsx'
 import CourseGrid from '../components/CourseGrid.jsx'
 
-function DashboardPage({ courses, status, errorMessage, onRetry, onSelectCourse }) {
+function DashboardPage({ courses, status, errorMessage, onRetry, onSelectCourse, user, onLogout }) {
   const [query, setQuery] = useState('')
 
   const filteredCourses = useMemo(() => {
@@ -21,6 +21,8 @@ function DashboardPage({ courses, status, errorMessage, onRetry, onSelectCourse 
         onQueryChange={setQuery}
         searchLabel="Search courses"
         searchPlaceholder="Search courses"
+        user={user}
+        onLogout={onLogout}
       />
 
       <main className="dashboard-main">
