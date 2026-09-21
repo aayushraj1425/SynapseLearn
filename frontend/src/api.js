@@ -1,11 +1,17 @@
+import { getToken } from './auth.js'
+
 const API_BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
 
 async function request(path) {
   let response
+  const token = getToken()
 
   try {
     response = await fetch(`${API_BASE_URL}${path}`, {
-      headers: { Accept: 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
     })
   } catch {
     throw new Error('The SynapseLearn backend is not reachable. Start it and try again.')
