@@ -18,4 +18,9 @@ class Settings(BaseSettings):
     canvas_base_url: str
     canvas_api_token: str
 
+    database_url: str = "sqlite:///./app.db"
+    jwt_secret: str
+    jwt_algorithm: str = "HS256"
+    access_token_expire_minutes: int = 60
+
 settings = Settings()
