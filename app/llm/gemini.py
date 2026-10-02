@@ -1,5 +1,4 @@
 from google import genai
-from google.genai import types
 
 from app.llm.client import LLMClient
 from app.schemas.llm import LLMResponse
@@ -10,12 +9,13 @@ class GeminiClient(LLMClient):
         self._client = genai.Client(api_key=api_key)
 
     def generate(self, prompt: str) -> LLMResponse:
-        response = self._client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json",
-                response_schema=LLMResponse,
-            ),
+        interaction = self._client.interactions.create(
+            model="gemini-3.5-flash-lite",
+            input=prompt,
+            response_format={
+                "type": "text",
+                "mime_type": "application/json",
+                "schema": LLMResponse.model_json_schema(),
+            },
         )
-        return LLMResponse.model_validate_json(response.text or "")
+        return LLMResponse.model_validate_json(interaction.output_text or "")
