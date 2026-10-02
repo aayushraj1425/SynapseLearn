@@ -17,6 +17,8 @@ class Settings(BaseSettings):
 
     canvas_base_url: str
     canvas_api_token: str
+    llm_provider: str = "gemini"
+    llm_api_key: str
 
     database_url: str = "sqlite:///./app.db"
     jwt_secret: str
